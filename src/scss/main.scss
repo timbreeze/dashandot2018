@@ -25,6 +25,8 @@
 // Definitions of page layout, & the layout of modules / elements in those pages
 // @import 'layout/_layout.scss';
 
+$black:  rgba(6, 10, 14, 1);
+
 * {
     box-sizing: border-box;
     font-family: 'National 2 Test', sans-serif;
@@ -240,15 +242,6 @@ ul.portfolio>li a:hover {
     transform-origin: 0 50%
 }
 
-@-webkit-keyframes spreadIn {
-    from {
-        transform: scaleX(0)
-    }
-    to {
-        transform: scaleX(1)
-    }
-}
-
 @keyframes spreadIn {
     from {
         transform: scaleX(0)
@@ -258,14 +251,6 @@ ul.portfolio>li a:hover {
     }
 }
 
-@-webkit-keyframes spreadOut {
-    from {
-        transform: scaleX(1)
-    }
-    to {
-        transform: scaleX(0)
-    }
-}
 
 @keyframes spreadOut {
     from {
@@ -276,89 +261,75 @@ ul.portfolio>li a:hover {
     }
 }
 
-#uc {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: #060A0E;
-    z-index: 5;
-    transition: cubic-bezier(.645, .045, .355, 1) .3s
+
+#wrap {
+    z-index: 1;
+    opacity: 0;    
+    animation: popIn 100ms ease 750ms forwards;
 }
 
-#uc p {
-    color: #fff
-}
-
-.remove-uc {
-    animation: 2.25s upOut 1.25s forwards;
-    transition: cubic-bezier(.645, .045, .355, 1) .3s
-}
-
-.content-in {
-    animation: 2.25s ease fadeIn 1s forwards
-}
-
-@-webkit-keyframes upOut {
-    from {
-        transform: translate(0, 0)
-    }
+@keyframes popIn {
     to {
-        transform: translate(0, -100vh)
+        opacity: 1;
     }
 }
 
-@keyframes upOut {
-    from {
-        transform: translate(0, 0)
+.loader {
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $black;
+    transform: translateX(-100%); 
+    opacity: 0;
+    animation: slideInLeftOffRight 1500ms cubic-bezier(.645, .045, .355, 1) forwards;
+    &:after {
+        content: 'Hey 👋';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 5;
+        color: rgba(255, 255, 255, 0.92);
     }
+}
+
+@keyframes slideInLeftOffRight {
+    0% {
+        opacity: 1;
+        transform: translateX(-100%); 
+    }
+    40% {
+        transform: translateX(0%); 
+    }
+    50% {
+        transform: translateX(0%); 
+    }
+    90% {
+        transform: translateX(100%); 
+    }
+    99% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100%);         
+    }
+}
+
+@keyframes slideOffRight {
     to {
-        transform: translate(0, -100vh)
+        transform: translateX(100%)
     }
 }
-
-@-webkit-keyframes fadeIn {
-    from {
-        opacity: 0
-    }
-    to {
-        opacity: 1
-    }
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0
     }
     to {
         opacity: 1
-    }
-}
-
-.uc-loading {
-    font-family: sans-serif;
-    line-height: 0;
-    width: 30px;
-    text-align: center;
-    transform-origin: 50% 50%;
-    animation: 3s rotateEmoji infinite
-}
-
-@-webkit-keyframes rotateEmoji {
-    from {
-        transform: rotateZ(0)
-    }
-    to {
-        transform: rotateZ(360deg)
-    }
-}
-
-@keyframes rotateEmoji {
-    from {
-        transform: rotateZ(0)
-    }
-    to {
-        transform: rotateZ(360deg)
     }
 }
